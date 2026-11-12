@@ -1,0 +1,97 @@
+:root{--bg1:#ffe3ee;--bg2:#fff4e0;--ink:#5a3550;--card:#fffaf5;--accent:#e86a9a;--grass:#8fd19e;--grass2:#6fbf84;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#2b1a3d;--bg2:#4a2a55;--ink:#ffe9f3;--card:#3a2347;--accent:#ff8fb8;--grass:#3f8a63;--grass2:#2f7050}}
+html,body{height:100%;margin:0}
+body{font-family:'Quicksand','Trebuchet MS',sans-serif;color:var(--ink);background:linear-gradient(180deg,var(--bg1),var(--bg2));overflow:hidden;position:relative}
+#stage{position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16px}
+h1{font-family:'Pacifico','Brush Script MT',cursive;font-weight:400;font-size:clamp(28px,8vw,44px);margin:0 0 4px;color:var(--accent);animation:fade 1.5s both}
+.sub{margin:0 0 10px;font-size:16px;opacity:.85;animation:fade 2s .6s both}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.petal{position:fixed;top:-30px;font-size:20px;pointer-events:none;animation:fall linear infinite;z-index:1}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
+.garden{position:fixed;left:0;right:0;bottom:0;height:34vh;max-height:260px;z-index:2;pointer-events:none}
+.hill{position:absolute;bottom:0;left:-10%;width:120%;height:60%;background:var(--grass);border-radius:50% 50% 0 0}
+.hill.b{background:var(--grass2);height:42%;left:-30%;width:100%}
+.fl{position:absolute;bottom:14%;width:46px;transform-origin:bottom center;animation:grow 1.6s cubic-bezier(.3,1.6,.5,1) both,sway 4s ease-in-out infinite alternate}
+.fl .stem{display:block;margin:-4px auto 0;width:4px;height:var(--h);background:#4fa56b;border-radius:2px}
+@keyframes grow{from{transform:scaleY(0) }to{transform:scaleY(1)}}
+@keyframes sway{from{rotate:-4deg}to{rotate:4deg}}
+.pup{position:relative;width:min(60vw,250px);margin-top:6px;animation:bob 2.4s ease-in-out infinite;cursor:pointer;z-index:3}
+@keyframes bob{50%{transform:translateY(-8px) rotate(-2deg)}}
+.heart{position:absolute;font-size:22px;animation:up 1.6s ease-out forwards;pointer-events:none}
+@keyframes up{to{transform:translateY(-80px);opacity:0}}
+.env{position:relative;width:min(70vw,240px);height:min(46vw,160px);margin:18px auto 0;background:#f7c5d6;border-radius:8px;cursor:pointer;border:0;padding:0;box-shadow:0 8px 20px rgba(150,60,100,.25);visibility:hidden;z-index:4}
+.env::before{content:"";position:absolute;inset:0;border-radius:8px;background:linear-gradient(135deg,transparent 50%,#eeaec4 50%) left/50% 100% no-repeat,linear-gradient(225deg,transparent 50%,#eeaec4 50%) right/50% 100% no-repeat}
+.flap{position:absolute;top:0;left:0;right:0;height:60%;background:#e996b4;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .7s}
+.seal{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:30px;z-index:2}
+.env.open .flap{transform:rotateX(180deg)}
+.env.open{animation:none}
+@keyframes pulse{50%{transform:scale(1.05)}}
+.hint{font-size:14px;margin-top:10px;opacity:.8;visibility:hidden;position:relative;z-index:4}
+#letter{position:fixed;inset:0;z-index:10;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(60,20,50,.45)}
+#letter.show{display:flex;animation:fadeonly .5s}
+@keyframes fadeonly{from{opacity:0}}
+.paper{max-width:420px;max-height:86vh;overflow-y:auto;background:var(--card);border-radius:14px;padding:26px 24px;text-align:left;box-shadow:0 10px 40px rgba(0,0,0,.3);animation:rise .8s cubic-bezier(.2,1.2,.4,1);border:2px dashed var(--accent)}
+@keyframes rise{from{transform:translateY(80px) scale(.8);opacity:0}}
+.paper h2{font-family:'Pacifico','Brush Script MT',cursive;font-weight:400;color:var(--accent);margin:0 0 10px;font-size:26px}
+.paper p{line-height:1.6;margin:0 0 10px;font-size:16px}
+.paper .sig{text-align:right;font-style:italic;margin-top:14px}
+.paper button{display:block;margin:14px auto 0;background:var(--accent);color:#fff;border:0;border-radius:20px;padding:9px 20px;font-size:15px;cursor:pointer}
+.paper p.l{opacity:0;animation:fade .8s forwards}
+.cola{transform-box:fill-box;transform-origin:10% 90%;animation:mover .45s ease-in-out infinite alternate}
+@keyframes mover{to{transform:rotate(22deg)}}
+
+/* ===== Escena: aparición del envelope ===== */
+.env.show{visibility:visible;animation:popin .6s both,pulse 2s ease-in-out .6s infinite}
+.env.show.open{animation:none}
+.hint.show{visibility:visible;animation:fade 1.2s both}
+@keyframes popin{from{opacity:0;transform:scale(.4)}70%{transform:scale(1.1)}to{opacity:1;transform:none}}
+
+/* ===== Intro: gatito negro ===== */
+[hidden]{display:none!important}
+.scene{display:flex;flex-direction:column;align-items:center}
+.intro{position:relative;width:100%;margin-top:6px;z-index:3;display:flex;flex-direction:column;align-items:center}
+.catwrap{position:relative;width:100%;height:150px}
+.walker{position:absolute;left:50%;bottom:0;width:170px;height:140px;margin-left:-85px;display:flex;justify-content:center;align-items:flex-end;animation:walkin 5s linear forwards}
+.walker svg{filter:drop-shadow(0 0 1.5px rgba(255,190,220,.85))}
+.shadow{position:absolute;bottom:-5px;left:50%;width:100px;height:12px;margin-left:-50px;border-radius:50%;background:rgba(60,20,50,.22)}
+.walk{width:170px;animation:bobwalk .5s ease-in-out infinite alternate}
+.sitpose{width:128px;display:none}
+.catwrap.sit .walk{display:none}
+.catwrap.sit .sitpose{display:block}
+.catwrap.leave .walker{animation:walkout 1.5s ease-in forwards}
+.leg,.ctail,.ctail2,.eyes,.dogpop,.head,.arm-ext{transform-box:fill-box}
+.leg{transform-origin:50% 0}
+.legA{animation:stepA .5s ease-in-out infinite alternate}
+.legB{animation:stepB .5s ease-in-out infinite alternate}
+.ctail{transform-origin:100% 100%;animation:tailsway 1s ease-in-out infinite alternate}
+.ctail2{transform-origin:0% 100%;animation:tailsway 1.2s ease-in-out infinite alternate}
+.eyes{transform-origin:50% 50%;animation:blink 4s infinite}
+.catbox{position:absolute;left:50%;bottom:0;width:44px;margin-left:34px;opacity:0;transform:scale(0);transform-origin:50% 100%}
+.catwrap.sit .catbox{animation:boxpop .6s .15s cubic-bezier(.3,1.6,.5,1) forwards}
+.catwrap.leave .catbox{opacity:1;transform:none;animation:boxgone .7s forwards}
+.start{margin-top:10px;position:relative;z-index:4;background:var(--accent);color:#fff;border:0;border-radius:24px;padding:11px 28px;font-family:inherit;font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 6px 16px rgba(150,60,100,.3);opacity:0;visibility:hidden}
+.start.show{visibility:visible;animation:fade .8s both,pulse 1.8s ease-in-out .9s infinite}
+@keyframes walkin{from{transform:translateX(-75vw)}to{transform:none}}
+@keyframes walkout{from{transform:none}to{transform:translateX(80vw)}}
+@keyframes bobwalk{from{transform:translateY(0)}to{transform:translateY(-3px)}}
+@keyframes stepA{from{transform:rotate(-26deg)}to{transform:rotate(26deg)}}
+@keyframes stepB{from{transform:rotate(26deg)}to{transform:rotate(-26deg)}}
+@keyframes tailsway{from{transform:rotate(-9deg)}to{transform:rotate(9deg)}}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+@keyframes boxpop{from{opacity:0;transform:scale(0)}to{opacity:1;transform:scale(1)}}
+@keyframes boxgone{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(1.4) translateY(-14px)}}
+
+/* ===== Perrito y chico tímido ===== */
+.dogpop{transform-origin:50% 100%;opacity:0;animation:pop .7s cubic-bezier(.3,1.5,.5,1) forwards}
+.boy{opacity:0}
+.pup.boy-in .boy{animation:boyin .9s ease-out forwards}
+.arm-ext{transform-origin:100% 61.667%;transform:rotate(-90deg)}
+.pup.boy-in .arm-ext{animation:extend 1s cubic-bezier(.3,1.5,.5,1) .95s forwards}
+.head{transform-origin:50% 100%;animation:shy 2.6s ease-in-out infinite alternate}
+.scratch{animation:scratch .45s ease-in-out infinite alternate}
+@keyframes pop{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:none}}
+@keyframes boyin{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+@keyframes extend{from{transform:rotate(-90deg)}to{transform:rotate(0)}}
+@keyframes shy{from{transform:rotate(-3deg)}to{transform:rotate(4deg)}}
+@keyframes scratch{from{transform:translate(-2px,2px)}to{transform:translate(2px,-2px)}}
